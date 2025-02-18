@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.annotation.Target;
 import java.util.Scanner;
 
 
@@ -14,26 +15,33 @@ public class Main {
             FileWriter fw = new FileWriter(myFile);
             fw.flush();
     }
-    public static boolean login(String email, File myFile){
-        if(email.isEmpty()){
-            return false;
-        }else{
-            return true;
+    public static boolean tryLogin(String email, File myFile) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(myFile));
+        while(bufferedReader.readLine() != null) {
+            if (bufferedReader.readLine().contains(email)) {
+                System.out.println("Login realizado com sucesso!");
+                bufferedReader.close();
+                return false;
+            } else {
+                System.out.println("User não encontrado");
+                bufferedReader.close();
+                return true;
+            }
         }
+        return false;
     }
 
 
     public static void main(String[] args) throws IOException {
         File myFile = new File("./src/teste.txt");
         FileWriter fileWriter = new FileWriter(myFile, true);
+        FileReader fileReader = new FileReader(myFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String name = "Camillao";
         Scanner sc = new Scanner(myFile);
         if(myFile.exists()){
             System.out.println("O arquivo existe mesmo: ");
-            //System.out.println(sc.nextLine());
-            fileWriter.write("Adicionando esta string");
-            fileWriter.close();
-            System.out.println("Acrescentado: " + sc.nextLine());
-            sc.close();
+            tryLogin(name,myFile);
         }
         else{
             System.out.println("O arquivo não existe");
