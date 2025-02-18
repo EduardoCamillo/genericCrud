@@ -14,6 +14,15 @@ public class Main {
             FileWriter fw = new FileWriter(myFile);
             fw.flush();
     }
+    public static boolean login(String email, File myFile){
+        if(email.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+
     public static void main(String[] args) throws IOException {
         File myFile = new File("./src/teste.txt");
         FileWriter fileWriter = new FileWriter(myFile, true);
