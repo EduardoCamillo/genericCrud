@@ -1,11 +1,20 @@
 import java.io.*;
 import java.util.Scanner;
 
+
 public class Main {
+
+    public static void cadastraUser(String nome,String email,File myFile) throws IOException {
+            FileWriter fw = new FileWriter(myFile);
+            fw.write(nome + " " +  email);
+            fw.close();
+            System.out.println("Usuário cadastrado com sucesso!");
+    }
+    public static void deletaUsers(File myFile) throws IOException {
+            FileWriter fw = new FileWriter(myFile);
+            fw.flush();
+    }
     public static void main(String[] args) throws IOException {
-
-
-
         File myFile = new File("./src/teste.txt");
         FileWriter fileWriter = new FileWriter(myFile, true);
         Scanner sc = new Scanner(myFile);
@@ -20,8 +29,7 @@ public class Main {
         else{
             System.out.println("O arquivo não existe");
         }
-   }
-    public void cadastraUser(String nome){
 
-    }
+   }
+
 }
