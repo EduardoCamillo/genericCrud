@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.annotation.Target;
 import java.util.Scanner;
 
 public class Main {
@@ -42,7 +41,6 @@ public class Main {
         String name;
         String email;
         Scanner scanner = new Scanner(System.in);
-        Scanner sc = new Scanner(myFile);
 
         if(myFile.exists()){
             System.out.println("Digite seu nome para efetuar login: ");
@@ -63,6 +61,7 @@ public class Main {
                 }
                 else{
                     System.out.println("Gracias!");
+                    main(args);
                 }
             }
         }
