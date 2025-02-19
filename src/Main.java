@@ -5,14 +5,16 @@ import java.util.Scanner;
 public class Main {
 
     public static void cadastraUser(String nome,String email,File myFile) throws IOException {
-            FileWriter fw = new FileWriter(myFile, true);
-            fw.write("\n" + nome + " " +  email);
-            fw.close();
-            System.out.println("Usuário cadastrado com sucesso!");
+                FileWriter fw = new FileWriter(myFile, true);
+                fw.write(nome + " " +  email + "   ");
+                fw.close();
+                System.out.println("Usuário cadastrado com sucesso!");
+
     }
     public static void deletaUsers(File myFile) throws IOException {
             FileWriter fw = new FileWriter(myFile);
             fw.flush();
+            fw.close();
     }
     public static boolean tryLogin(String email, File myFile) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(myFile));
@@ -24,7 +26,6 @@ public class Main {
                     return true;
                 } else {
                     System.out.println("User não encontrado");
-
                     return false;
                 }
             }
@@ -38,19 +39,27 @@ public class Main {
     public static void main(String[] args) throws IOException {
         File myFile = new File("./src/teste.txt");
         int selector;
-        String name = "eduardo";
+        String name;
+        String email;
         Scanner scanner = new Scanner(System.in);
         Scanner sc = new Scanner(myFile);
+
         if(myFile.exists()){
-            System.out.println("O arquivo existe mesmo: ");
+            System.out.println("Digite seu nome para efetuar login: ");
+            name = scanner.nextLine();
             boolean bool = tryLogin(name,myFile);
             if(!bool){
                 System.out.println("Usuário não encontrado, deseja efetuar o cadastro?\n" +
-                        "Digite 1 para sim ou qualquer tecla para não: ");
+                        "Digite 1 para sim ou 2 para apagar todos usuários: ");
                 selector = scanner.nextInt();
                 if(selector == 1){
-                    System.out.println("Cadastrando usuário " + name + "...");
-                    cadastraUser(name, "opa@gmail", myFile);
+                    System.out.println("Digite seu email: ");
+                    email = scanner.next();
+                    System.out.println("Cadastrando usuário " + email + "...");
+                    cadastraUser(name, email, myFile);
+                }
+                if(selector == 2){
+                    deletaUsers(myFile);
                 }
                 else{
                     System.out.println("Gracias!");
