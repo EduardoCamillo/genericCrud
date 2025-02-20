@@ -4,12 +4,27 @@ import java.util.Scanner;
 public class Main {
 
     public static void cadastraUser(String nome,String email,File myFile) throws IOException {
-                FileWriter fw = new FileWriter(myFile, true);
-                fw.write(nome + " " +  email + "   ");
-                fw.close();
-                System.out.println("Usuário cadastrado com sucesso!");
+           FileWriter fw = new FileWriter(myFile, true);
+
+           fw.write(nome + " " +  email + "   ");
+           fw.close();
+           System.out.println("Usuário cadastrado com sucesso!");
 
     }
+    public static void updateUsers(String name, File myFile, String newName) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(myFile));
+        String line = bufferedReader.readLine();
+        if(tryLogin(name, myFile)){
+            System.out.println("Alterando " + name + "para" + newName + "...");
+            while(line != null){
+                if(line.contains(name)){
+                    name = newName;
+                }
+            }
+        }
+
+    }
+
     public static void deletaUsers(File myFile) throws IOException {
             FileWriter fw = new FileWriter(myFile);
             fw.flush();
