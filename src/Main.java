@@ -1,4 +1,7 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -12,21 +15,19 @@ public class Main {
 
     }
     public static void updateUsers(String name, File myFile, String newName) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(myFile));
-        String line = bufferedReader.readLine();
-        if(tryLogin(name, myFile)){
-            System.out.println("Alterando " + name + "para" + newName + "...");
-            while(line != null){
-                if(line.contains(name)){
-                    name = newName;
-                }
-            }
-        }
+        FileWriter fw = new FileWriter(myFile, true);
+        String teste = new String(Files.readAllBytes(myFile.toPath()));
+        System.out.println("Alterando " + name + " para " + newName + "...");
+        String alterado = teste.replace(name, newName);
+        fw.write(alterado);
+        fw.close();
 
-    }
+
+        }
 
     public static void deletaUsers(File myFile) throws IOException {
             FileWriter fw = new FileWriter(myFile);
+            FileReader rd = new FileReader(myFile);
             fw.flush();
             fw.close();
     }
@@ -52,6 +53,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         File myFile = new File("./src/teste.txt");
+        System.out.println(myFile.toPath());
         int selector;
         String name;
         String email;
@@ -63,7 +65,7 @@ public class Main {
             boolean bool = tryLogin(name,myFile);
             if(!bool){
                 System.out.println("Usuário não encontrado, deseja efetuar o cadastro?\n" +
-                        "Digite 1 para sim ou 2 para apagar todos usuários: ");
+                        "Digite 1 para sim ou 2 para apagar todos usuários ou 3 para editar um usuário: ");
                 selector = scanner.nextInt();
                 if(selector == 1){
                     System.out.println("Digite seu email: ");
@@ -78,8 +80,10 @@ public class Main {
                     System.out.println("Gracias!");
                     main(args);
                 }
+            }else{
+                    updateUsers(name,myFile, "Duardo");
+                }
             }
-        }
         else{
             System.out.println("O arquivo não existe");
         }
