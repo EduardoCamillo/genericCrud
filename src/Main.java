@@ -53,7 +53,6 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        Users users = new Users("Eduzz","masm");
         File myFile = new File("./src/teste.txt");
         System.out.println(myFile.toPath());
         int selector;
@@ -61,7 +60,10 @@ public class Main {
 
         if(myFile.exists()){
             System.out.println("Digite seu nome para efetuar login: ");
-            //name = scanner.nextLine();
+            String name = scanner.nextLine();
+            System.out.println("Agora digite seu email: ");
+            String email = scanner.nextLine();
+            Users users = new Users(name,email);
             boolean bool = tryLogin(users.getName(),myFile);
             if(!bool){
                 System.out.println("Usuário não encontrado, deseja efetuar o cadastro?\n" +
@@ -81,6 +83,9 @@ public class Main {
                     main(args);
                 }
             }
+            System.out.println("---------------------------");
+            System.out.println("Você está logado");
+            System.out.println("---------------------------");
             }
         else{
             System.out.println("O arquivo não existe");
