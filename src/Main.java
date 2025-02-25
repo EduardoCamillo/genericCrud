@@ -6,14 +6,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void cadastraUser(String nome,String email,File myFile) throws IOException {
+    public static void cadastraUser(Users user,File myFile) throws IOException {
            FileWriter fw = new FileWriter(myFile, true);
 
-           fw.write(nome + " " +  email + "   ");
+           fw.write(user.getName() + " " +  user.getEmail() + "   ");
            fw.close();
            System.out.println("Usuário cadastrado com sucesso!");
 
     }
+    //in progress:
     public static void updateUsers(String name, File myFile, String newName) throws IOException {
         FileWriter fw = new FileWriter(myFile, true);
         String teste = new String(Files.readAllBytes(myFile.toPath()));
@@ -52,26 +53,25 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+        Users users = new Users("Eduzz","masm");
         File myFile = new File("./src/teste.txt");
         System.out.println(myFile.toPath());
         int selector;
-        String name;
-        String email;
         Scanner scanner = new Scanner(System.in);
 
         if(myFile.exists()){
             System.out.println("Digite seu nome para efetuar login: ");
-            name = scanner.nextLine();
-            boolean bool = tryLogin(name,myFile);
+            //name = scanner.nextLine();
+            boolean bool = tryLogin(users.getName(),myFile);
             if(!bool){
                 System.out.println("Usuário não encontrado, deseja efetuar o cadastro?\n" +
                         "Digite 1 para sim ou 2 para apagar todos usuários ou 3 para editar um usuário: ");
                 selector = scanner.nextInt();
                 if(selector == 1){
-                    System.out.println("Digite seu email: ");
-                    email = scanner.next();
-                    System.out.println("Cadastrando usuário " + email + "...");
-                    cadastraUser(name, email, myFile);
+                    //System.out.println("Digite seu email: ");
+                    //email = scanner.next();
+                    System.out.println("Cadastrando usuário " + users.getEmail() + "...");
+                    cadastraUser(users, myFile);
                 }
                 if(selector == 2){
                     deletaUsers(myFile);
@@ -80,9 +80,7 @@ public class Main {
                     System.out.println("Gracias!");
                     main(args);
                 }
-            }else{
-                    updateUsers(name,myFile, "Duardo");
-                }
+            }
             }
         else{
             System.out.println("O arquivo não existe");
